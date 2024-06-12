@@ -54,45 +54,45 @@ CREATE TABLE oficina (
 );
 
 CREATE TABLE empleado (
-    codigo_empleado INT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(50) NOT NULL,
+    codigo_empleado INT(11) AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(50),
     apellido1 VARCHAR(50),
     apellido2 VARCHAR(50),
-    extension VARCHAR(10),
+    extension VARCHAR(10) NOT NULL,
     email VARCHAR(100),
     codigo_oficina VARCHAR(10),
-    codigo_jefe INT,
-    puesto VARCHAR(50),
+    codigo_jefe INT(11) NOT NULL,
+    puesto VARCHAR(50) NOT NULL,
     FOREIGN KEY (codigo_oficina) REFERENCES oficina(codigo_oficina),
     FOREIGN KEY (codigo_jefe) REFERENCES empleado(codigo_empleado)
 );
 
 CREATE TABLE pedido (
-    codigo_pedido INT AUTO_INCREMENT PRIMARY KEY,
-    fecha_pedido DATE NOT NULL,
-    fecha_esperada DATE NOT NULL,
-    fecha_entrega DATE,
-    estado VARCHAR(15) NOT NULL,
-    comentarios TEXT,
-    codigo_cliente INT,
+    codigo_pedido INT(11) AUTO_INCREMENT PRIMARY KEY,
+    fecha_pedido DATE,
+    fecha_esperada DATE,
+    fecha_entrega DATE NOT NULL,
+    estado VARCHAR(15),
+    comentarios TEXT NOT NULL,
+    codigo_cliente INT(11),
     FOREIGN KEY (codigo_cliente) REFERENCES cliente(codigo_cliente)
 );
 
 CREATE TABLE detalle_pedido (
-    codigo_pedido INT,
+    codigo_pedido INT(11),
     codigo_producto VARCHAR(15),
-    cantidad INT UNSIGNED NOT NULL,
-    precio_unidad DECIMAL(15,2) NOT NULL,
-    numero_linea SMALLINT UNSIGNED NOT NULL,
+    cantidad INT(11) NOT NULL,
+    precio_unidad DECIMAL(15,2),
+    numero_linea SMALLINT NOT NULL,
     PRIMARY KEY (codigo_pedido, codigo_producto, numero_linea),
     FOREIGN KEY (codigo_pedido) REFERENCES pedido(codigo_pedido),
     FOREIGN KEY (codigo_producto) REFERENCES producto(codigo_producto)
 );
 
 CREATE TABLE pago (
-    codigo_cliente INT,
+    codigo_cliente INT(11),
     forma_pago VARCHAR(40),
-    id_transaccion VARCHAR(50),
+    id_transaccion VARCHAR(50) PRIMARY KEY,
     fecha_pago DATE,
     total DECIMAL(15,2),
     PRIMARY KEY (codigo_cliente, id_transaccion),
