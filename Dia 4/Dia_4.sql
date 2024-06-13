@@ -1,8 +1,6 @@
 -- #####################
 -- ### DIA # 4 - RELACIONAMIENTO DE CONSULTAS ###
 -- #####################
-
-
 create database Dia4_CeballosKenneth;
 
 use Dia4_CeballosKenneth;
@@ -63,3 +61,34 @@ INSERT INTO idioma_pais (id_idioma, id_pais, es_oficial) VALUES
 (3, 1, 0), -- Inglés no es oficial en España
 (3, 2, 0), -- Inglés no es oficial en México
 (3, 3, 0); -- Inglés no es oficial en Japón
+
+-- ##### INSERCIONES ADICIONALES ####
+INSERT INTO pais (id, nombre, continente, poblacion) VALUES 
+(6, 'Italia', 'Europa', 60000000); -- Pais sin ciudades
+
+INSERT INTO ciudad (id, nombre, id_pais) VALUES 
+(11, 'Ciudad Desconocida', NULL); -- Ciudad sin país
+--  Listar todos los pares de nombres de países y sus 
+-- ciudades correspondientes que están relacionadas 
+-- en la base de datos (INNER JOIN)
+
+select pais.nombre as Pais, ciudad.nombre as Ciudad
+from pais
+inner join ciudad on pais.id = ciudad.id_pais;
+
+ -- Listar todas las ciudades con el nombre de su país. 
+ -- Si alguna ciudad no tiene un país asignado, 
+ -- aún aparecerá en la lista con el NombrePais como NULL. (L.JOIN)
+ 
+ select pais.nombre as Pais, ciudad.nombre as Ciudad
+ from pais
+ left join ciudad on pais.id=ciudad.id_pais;
+ 
+--  Mostrar todos los países y, 
+-- si tienen ciudades asociadas, estas se mostrarán 
+-- junto al nombre del país. Si no hay ciudades asociadas a un país, 
+-- el NombreCiudad aparecerá como NULL.
+
+select pais.nombre as Pais, ciudad.nombre as Ciudad
+from pais
+right join ciudad on ciudad.id_pais = pais.id;
